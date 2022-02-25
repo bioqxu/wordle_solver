@@ -51,20 +51,21 @@ def main():
     guess_times = 1
     all_words = read_words(WORD_LENGTH)
     input_word = all_words[0]
-    print(f"#{guess_times} Guess Word is: \x1b[6;30;42m{input_word}\x1b[0m\n")
+    print(f"#{guess_times} Guess Word is: \x1b[6;30;42m{input_word}\x1b[0m")
     while True:
         guess_times += 1
-        input_color = input("Please enter a color string (must be 5, byg): ")
+        input_color = input("Please enter a color string (5 letters) \n(b is gray; y is yellow; g is green): ")
         if input_color == 'no':
             all_words, input_word = pass_word(all_words)
-            print(f"#{guess_times} Guess Word is: \x1b[6;30;42m{input_word}\x1b[0m\n")
+            print(f"\n#{guess_times} Guess Word is: \x1b[6;30;42m{input_word}\x1b[0m")
             guess_times -= 1
             continue
         elif len(input_color) != WORD_LENGTH or any(x not in ['b', 'y', 'g'] for x in input_color):
-            print("Sorry, your input should be 'no'(not valid word) or '5 byg string'(the color of output).")
+            print("Sorry, your input should be 'no'(not valid word) or '5 byg string'(the color of output)")
+            print("(b is gray; y is yellow; g is green)\n")
             continue
         all_words, input_word = do_guess(all_words, input_word, input_color)
-        print(f"#{guess_times} Guess Word is: \x1b[6;30;42m{input_word}\x1b[0m\n")
+        print(f"\n#{guess_times} Guess Word is: \x1b[6;30;42m{input_word}\x1b[0m")
         
 
 if __name__ == "__main__":
