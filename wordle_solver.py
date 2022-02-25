@@ -3,7 +3,7 @@ import re
 
 def do_black(words_now, l, input_word, p):
     w=[]
-    if l in input_word[p+1:]:
+    if l in input_word[:p]+input_word[p+1:]:
         w = words_now
     else:
         for i in words_now:
