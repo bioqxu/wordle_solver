@@ -30,7 +30,11 @@ def do_guess(words_now, input_word, input_color):
         if j[1] == 'g':
             words_now = do_green(words_now, j[0], i)
     input_word = words_now[0]
-    print(input_word)
+    return words_now, input_word
+
+def pass_word(words_now):
+    words_now = words_now[1:]
+    input_word = words_now[0]
     return words_now, input_word
 
 def read_words(WORD_LENGTH):
@@ -38,20 +42,30 @@ def read_words(WORD_LENGTH):
     with open("english.txt") as f:
         for line in f:
             words.append(line.split()[1])
-    all_words = [i.lower() for i in words if len(i)==WORD_LENGTH and len(set(i))==WORD_LENGTH]
+    # all_words = [i.lower() for i in words if len(i)==WORD_LENGTH and len(set(i))==WORD_LENGTH]
+    all_words = [i.lower() for i in words if len(i)==WORD_LENGTH]
     return all_words
 
 def main():
     WORD_LENGTH = 5
+    guess_times = 1
     all_words = read_words(WORD_LENGTH)
     input_word = all_words[0]
-    print(input_word)
+    print(f"#{guess_times} Guess Word is: \x1b[6;30;42m{input_word}\x1b[0m\n")
     while True:
-        input_color = input("Please enter a color string (must be 5): ")
-        if len(input_color) != WORD_LENGTH or any(x not in ['b', 'y', 'g'] for x in input_color) :
-            print("Sorry, your response was not good.")
+        guess_times += 1
+        input_color = input("Please enter a color string (must be 5, byg): ")
+        if input_color == 'no':
+            all_words, input_word = pass_word(all_words)
+            print(f"#{guess_times} Guess Word is: \x1b[6;30;42m{input_word}\x1b[0m\n")
+            guess_times -= 1
+            continue
+        elif len(input_color) != WORD_LENGTH or any(x not in ['b', 'y', 'g'] for x in input_color):
+            print("Sorry, your input should be 'no'(not valid word) or '5 byg string'(the color of output).")
             continue
         all_words, input_word = do_guess(all_words, input_word, input_color)
+        print(f"#{guess_times} Guess Word is: \x1b[6;30;42m{input_word}\x1b[0m\n")
+        
 
 if __name__ == "__main__":
     main()
