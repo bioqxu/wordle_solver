@@ -1,6 +1,5 @@
 
 def do_black(words_now, l, input_word, p):
-    print (l, input_word, p)
     w=[]
     if l in input_word[p:]:
         w = words_now
