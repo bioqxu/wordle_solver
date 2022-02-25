@@ -31,7 +31,7 @@ def report_color(final_word, test_word):
                 color[i]='b'
     return ''.join(color)
 
-def main():
+def main(feq_choose):
     WORD_LENGTH=5
     words,p = read_words2(WORD_LENGTH)
     num_steps=[]
@@ -39,8 +39,10 @@ def main():
         all_words = words.copy()
         all_p = p.copy()
         steps=1
-        final_word = random.choices(all_words,all_p)[0]
-        
+        if feq_choose:
+            final_word = random.choices(all_words,all_p)[0]
+        else:
+            final_word = random.choice(all_words)
         input_word = all_words[0]
         while input_word != final_word:
             input_color = report_color(final_word, input_word)
@@ -51,5 +53,6 @@ def main():
     print(f"Average steps: {statistics.mean(num_steps)}")
 
 if __name__ == "__main__":
-    main()
+    main(feq_choose=True)
+
 
