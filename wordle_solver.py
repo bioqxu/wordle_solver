@@ -39,9 +39,10 @@ def pass_word(words_now):
 
 def read_words(WORD_LENGTH):
     words = []
-    with open("english.txt") as f:
+    with open("data/words.txt") as f:
+        next(f)
         for line in f:
-            words.append(line.split()[1])
+            words.append(line.split()[0])
     # all_words = [i.lower() for i in words if len(i)==WORD_LENGTH and len(set(i))==WORD_LENGTH]
     all_words = [i.lower() for i in words if len(i)==WORD_LENGTH]
     return all_words
