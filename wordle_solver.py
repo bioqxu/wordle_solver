@@ -1,7 +1,9 @@
+import re
+
 
 def do_black(words_now, l, input_word, p):
     w=[]
-    if l in input_word[p:]:
+    if l in input_word[p+1:]:
         w = words_now
     else:
         for i in words_now:
@@ -31,7 +33,7 @@ def do_guess(words_now, input_word, input_color):
             words_now = do_yellow(words_now, j[0], input_word, i)
         if j[1] == 'g':
             words_now = do_green(words_now, j[0], input_word, i)
-    if input_color != 'ggggg':
+    if input_color != 'ggggg' and input_word in words_now:
         words_now.remove(input_word)
     input_word = words_now[0]
     return words_now, input_word
