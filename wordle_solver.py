@@ -1,20 +1,23 @@
-import re
 
-def do_black(words_now, l, p):
+def do_black(words_now, l, input_word, p):
+    print (l, input_word, p)
     w=[]
-    for i in words_now:
-        if re.search(l, i) is None:
-            w.append(i)
+    if l in input_word[p:]:
+        w = words_now
+    else:
+        for i in words_now:
+            if re.search(l, i) is None:
+                w.append(i)        
     return w
 
-def do_yellow(words_now, l, p):
+def do_yellow(words_now, l, input_word, p):
     w=[]
     for i in words_now:
         if re.search(l, i) is not None and i[p]!=l:
             w.append(i)
     return w
 
-def do_green(words_now, l, p):
+def do_green(words_now, l, input_word, p):
     w=[]
     for i in words_now:
         if i[p] == l:
@@ -24,11 +27,13 @@ def do_green(words_now, l, p):
 def do_guess(words_now, input_word, input_color):
     for i,j in enumerate(zip(input_word, input_color)):
         if j[1] == 'b':
-            words_now = do_black(words_now, j[0], i)
+            words_now = do_black(words_now, j[0], input_word, i)
         if j[1] == 'y':
-            words_now = do_yellow(words_now, j[0], i)
+            words_now = do_yellow(words_now, j[0], input_word, i)
         if j[1] == 'g':
-            words_now = do_green(words_now, j[0], i)
+            words_now = do_green(words_now, j[0], input_word, i)
+    if input_color != 'ggggg':
+        words_now.remove(input_word)
     input_word = words_now[0]
     return words_now, input_word
 
@@ -68,6 +73,7 @@ def main():
         all_words, input_word = do_guess(all_words, input_word, input_color)
         print(f"\n#{guess_times} Guess Word is: \x1b[6;30;42m{input_word}\x1b[0m")
         
+
 
 if __name__ == "__main__":
     main()
